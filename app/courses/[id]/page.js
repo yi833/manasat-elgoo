@@ -1,66 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "../../lib/supabase";
 
-export default function CoursePage({ params }) {
-  const [course, setCourse] = useState(null);
-  const [lessons, setLessons] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function Home() {
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    loadCourse();
+    // الكورسات هتتضاف من لوحة الأدمن لاحقًا
+    setCourses([]);
   }, []);
-
-  async function loadCourse() {
-    const { id } = await params;
-
-    const { data: courseData } = await supabase
-      .from("courses")
-      .select("*")
-      .eq("id", id)
-      .single();
-
-    const { data: lessonsData } = await supabase
-      .from("lessons")
-      .select("*")
-      .eq("course_id", id)
-      .order("created_at", { ascending: true });
-
-    setCourse(courseData);
-    setLessons(lessonsData || []);
-    setLoading(false);
-  }
-
-  if (loading) {
-    return (
-      <main
-        dir="rtl"
-        style={{
-          padding: "40px",
-          textAlign: "center",
-          fontFamily: "Arial",
-        }}
-      >
-        جاري تحميل الكورس...
-      </main>
-    );
-  }
-
-  if (!course) {
-    return (
-      <main
-        dir="rtl"
-        style={{
-          padding: "40px",
-          textAlign: "center",
-          fontFamily: "Arial",
-        }}
-      >
-        <h2>الكورس غير موجود</h2>
-      </main>
-    );
-  }
 
   return (
     <main
@@ -68,110 +16,99 @@ export default function CoursePage({ params }) {
       style={{
         minHeight: "100vh",
         background: "#f5f7fb",
-        padding: "20px",
         fontFamily: "Arial, sans-serif",
       }}
     >
-      <div
+      <header
         style={{
-          maxWidth: "900px",
-          margin: "auto",
+          background: "#111827",
+          color: "white",
+          padding: "20px",
+          textAlign: "center",
+        }}
+      >
+        <h1 style={{ margin: 0 }}>منصات الجو</h1>
+        <p style={{ margin: "8px 0 0", color: "#d1d5db" }}>
+          منصة الكورسات التعليمية
+        </p>
+      </header>
+
+      <section
+        style={{
+          maxWidth: "1100px",
+          margin: "40px auto",
+          padding: "20px",
         }}
       >
         <div
           style={{
-            background: "#fff",
-            padding: "25px",
+            background: "white",
             borderRadius: "20px",
-            marginBottom: "25px",
+            padding: "35px 20px",
+            textAlign: "center",
+            boxShadow: "0 5px 20px rgba(0,0,0,0.08)",
           }}
         >
-          {course.image_url && (
-            <img
-              src={course.image_url}
-              alt={course.title}
-              style={{
-                width: "100%",
-                maxHeight: "350px",
-                objectFit: "cover",
-                borderRadius: "15px",
-                marginBottom: "20px",
-              }}
-            />
-          )}
+          <h2 style={{ fontSize: "30px", marginBottom: "10px" }}>
+            أهلاً بيك في منصات الجو 👋
+          </h2>
 
-          <h1 style={{ color: "#16a34a" }}>
-            {course.title}
-          </h1>
-
-          <p style={{ color: "#666", lineHeight: "1.8" }}>
-            {course.description}
+          <p style={{ color: "#6b7280", fontSize: "18px" }}>
+            اختار الكورس اللي عايز تتعلمه
           </p>
         </div>
 
-        <h2>دروس الكورس 📚</h2>
+        <h2 style={{ marginTop: "40px" }}>الكورسات</h2>
 
-        {lessons.length === 0 ? (
+        {courses.length === 0 ? (
           <div
             style={{
-              background: "#fff",
-              padding: "25px",
+              background: "white",
+              padding: "30px",
               borderRadius: "15px",
               textAlign: "center",
+              color: "#6b7280",
+              marginTop: "20px",
             }}
           >
-            لا توجد دروس في هذا الكورس حتى الآن.
+            لا توجد كورسات متاحة حاليًا
           </div>
         ) : (
-          lessons.map((lesson, index) => (
-            <div
-              key={lesson.id}
-              style={{
-                background: "#fff",
-                padding: "20px",
-                borderRadius: "15px",
-                marginBottom: "15px",
-              }}
-            >
-              <h3>
-                {index + 1}. {lesson.title}
-              </h3>
-
-              {lesson.content && (
-                <p
-                  style={{
-                    color: "#555",
-                    lineHeight: "1.8",
-                    whiteSpace: "pre-wrap",
-                  }}
-                >
-                  {lesson.content}
-                </p>
-              )}
-
-              {lesson.video_url && (
-                <a
-                  href={lesson.video_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: "inline-block",
-                    marginTop: "10px",
-                    padding: "12px 20px",
-                    background: "#16a34a",
-                    color: "#fff",
-                    textDecoration: "none",
-                    borderRadius: "10px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  مشاهدة الفيديو ▶️
-                </a>
-              )}
-            </div>
-          ))
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              gap: "20px",
+              marginTop: "20px",
+            }}
+          >
+            {courses.map((course) => (
+              <div
+                key={course.id}
+                style={{
+                  background: "white",
+                  padding: "20px",
+                  borderRadius: "15px",
+                  boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+                }}
+              >
+                <h3>{course.title}</h3>
+                <p>{course.description}</p>
+              </div>
+            ))}
+          </div>
         )}
-      </div>
+      </section>
+
+      <footer
+        style={{
+          textAlign: "center",
+          padding: "25px",
+          color: "#6b7280",
+        }}
+      >
+        © 2026 منصات الجو
+      </footer>
     </main>
   );
-                    }
+}
