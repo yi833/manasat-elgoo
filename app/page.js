@@ -1,4 +1,29 @@
-export default function Home() {
+"use client";
+
+import { useEffect, useState } from "react";
+import { supabase } from "./lib/supabase";
+
+export default function HomePage() {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadCourses();
+  }, []);
+
+  async function loadCourses() {
+    const { data, error } = await supabase
+      .from("courses")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (!error) {
+      setCourses(data || []);
+    }
+
+    setLoading(false);
+  }
+
   return (
     <main
       dir="rtl"
@@ -8,140 +33,128 @@ export default function Home() {
         fontFamily: "Arial, sans-serif",
       }}
     >
-      {/* الهيدر */}
       <header
         style={{
-          background: "#ffffff",
-          padding: "18px 6%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "1px solid #e5e7eb",
+          background: "#16a34a",
+          color: "#fff",
+          padding: "18px 20px",
+          textAlign: "center",
         }}
       >
-        <h1 style={{ margin: 0, fontSize: "28px" }}>
-          🚀 منصات الجو
-        </h1>
-
-        <button
-          style={{
-            background: "#16a34a",
-            color: "#fff",
-            border: "none",
-            padding: "12px 22px",
-            borderRadius: "10px",
-            fontSize: "16px",
-            cursor: "pointer",
-          }}
-        >
-          تسجيل الدخول
-        </button>
+        <h1 style={{ margin: 0 }}>منصات الجو 🎓</h1>
+        <p style={{ margin: "8px 0 0" }}>
+          منصة الكورسات التعليمية
+        </p>
       </header>
 
-      {/* الترحيب */}
       <section
         style={{
-          textAlign: "center",
-          padding: "70px 20px",
-          background: "#111827",
-          color: "#fff",
+          maxWidth: "1000px",
+          margin: "auto",
+          padding: "30px 20px",
         }}
       >
-        <h2 style={{ fontSize: "42px", marginBottom: "15px" }}>
-          أهلاً بيك في منصات الجو 🎓
-        </h2>
-
-        <p style={{ fontSize: "20px", color: "#d1d5db" }}>
-          منصة عربية للتعلم والكورسات التعليمية
-        </p>
-
-        <button
-          style={{
-            marginTop: "20px",
-            background: "#22c55e",
-            color: "#fff",
-            border: "none",
-            padding: "14px 30px",
-            borderRadius: "10px",
-            fontSize: "18px",
-          }}
-        >
-          تصفح الكورسات
-        </button>
-      </section>
-
-      {/* الكورسات */}
-      <section style={{ padding: "50px 6%" }}>
-        <h2 style={{ textAlign: "center", fontSize: "30px" }}>
-          أحدث الكورسات 📚
-        </h2>
-
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-            gap: "25px",
-            marginTop: "35px",
+            background: "#fff",
+            padding: "30px 20px",
+            borderRadius: "20px",
+            textAlign: "center",
+            marginBottom: "30px",
           }}
         >
-          <CourseCard
-            title="كورس الرياضيات"
-            description="تعلم الرياضيات بطريقة سهلة وبسيطة."
-          />
+          <h2 style={{ color: "#16a34a" }}>
+            أهلاً بيك في منصات الجو 👋
+          </h2>
 
-          <CourseCard
-            title="كورس الكيمياء"
-            description="شرح مبسط ومراجعات شاملة."
-          />
-
-          <CourseCard
-            title="كورس الفيزياء"
-            description="افهم الفيزياء خطوة بخطوة."
-          />
+          <p style={{ color: "#666", lineHeight: "1.8" }}>
+            اختار الكورس اللي عايز تتعلمه وابدأ دراستك.
+          </p>
         </div>
-      </section>
 
-      {/* الفوتر */}
-      <footer
-        style={{
-          background: "#111827",
-          color: "#fff",
-          textAlign: "center",
-          padding: "25px",
-          marginTop: "30px",
-        }}
-      >
-        © 2026 منصات الجو - جميع الحقوق محفوظة
-      </footer>
+        <h2>الكورسات 📚</h2>
+
+        {loading ? (
+          <p>جاري تحميل الكورسات...</p>
+        ) : courses.length === 0 ? (
+          <div
+            style={{
+              background: "#fff",
+              padding: "25px",
+              borderRadius: "15px",
+              textAlign: "center",
+            }}
+          >
+            لا توجد كورسات متاحة حاليًا.
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(250px, 1fr))",
+              gap: "20px",
+            }}
+          >
+            {courses.map((course) => (
+              <div
+                key={course.id}
+                style={{
+                  background: "#fff",
+                  borderRadius: "18px",
+                  overflow: "hidden",
+                  boxShadow: "0 5px 20px rgba(0,0,0,0.07)",
+                }}
+              >
+                {course.image_url && (
+                  <img
+                    src={course.image_url}
+                    alt={course.title}
+                    style={{
+                      width: "100%",
+                      height: "180px",
+                      objectFit: "cover",
+                    }}
+                  />
+                )}
+
+                <div style={{ padding: "18px" }}>
+                  <h3>{course.title}</h3>
+
+                  <p
+                    style={{
+                      color: "#666",
+                      lineHeight: "1.7",
+                    }}
+                  >
+                    {course.description}
+                  </p>
+
+                  <button
+                    onClick={() =>
+                      (window.location.href =
+                        `/courses/${course.id}`)
+                    }
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      background: "#16a34a",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "10px",
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                    }}
+                  >
+                    دخول الكورس
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </main>
   );
-}
-
-function CourseCard({ title, description }) {
-  return (
-    <div
-      style={{
-        background: "#fff",
-        borderRadius: "15px",
-        padding: "25px",
-        boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
-      }}
-    >
-      <div
-        style={{
-          height: "120px",
-          background: "#e5e7eb",
-          borderRadius: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "45px",
-        }}
-      >
-        📚
-      </div>
-
-      <h3 style={{ fontSize: "22px" }}>{title}</h3>
-
-      <p style={{ color: "#6b7280", lineHeight: "1.7" }}>
-        {description
+        }
