@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>منصات الجو | منصة الكورسات</title>
+
+  <meta name="description" content="منصات الجو - منصة تعليمية عربية للكورسات والدروس التعليمية.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Tahoma, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      color: white;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.12);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      opacity: 0.8;
+    }
+
+    .hero {
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 50px 20px;
+      background: linear-gradient(135deg, #eef4ff, #ffffff);
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      color: #1e40af;
+      margin-bottom: 20px;
+    }
+
+    .hero h2 {
+      font-size: 25px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 14px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+
+    .courses {
+      padding: 60px 6%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 40px;
+      color: #1e3a8a;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .course-icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+    }
+
+    .course-card h3 {
+      margin-bottom: 12px;
+      color: #1e40af;
+    }
+
+    .course-card p {
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .about {
+      background: white;
+      padding: 60px 8%;
+      text-align: center;
+    }
+
+    .about p {
+      max-width: 750px;
+      margin: auto;
+      line-height: 2;
+      color: #555;
+      font-size: 18px;
+    }
+
+    footer {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 0 7px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero h2 {
+        font-size: 21px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">منصات الجو 🚀</div>
+
+    <nav>
+      <a href="#">الرئيسية</a>
+      <a href="#courses">الكورسات</a>
+      <a href="#about">عن المنصة</a>
+      <a href="login.html">تسجيل الدخول</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+
+      <h1>منصات الجو 🚀</h1>
+
+      <h2>اتعلم. طور نفسك. وحقق هدفك.</h2>
+
+      <p>
+        منصة تعليمية عربية تجمع لك الكورسات والدروس
+        في مكان واحد بطريقة سهلة وبسيطة.
+      </p>
+
+      <a href="#courses" class="btn">استكشف الكورسات</a>
+
+    </div>
+  </section>
+
+  <section class="courses" id="courses">
+
+    <h2 class="section-title">الكورسات المتاحة</h2>
+
+    <div class="course-grid">
+
+      <div class="course-card">
+        <div class="course-icon">💻</div>
+        <h3>البرمجة</h3>
+        <p>
+          تعلم أساسيات البرمجة وتطوير المواقع
+          خطوة بخطوة.
+        </p>
+        <button class="btn">عرض الكورس</button>
+      </div>
+
+      <div class="course-card">
+        <div class="course-icon">📚</div>
+        <h3>التعليم</h3>
+        <p>
+          دروس تعليمية منظمة تساعدك على تطوير
+          مستواك وتحقيق أهدافك.
+        </p>
+        <button class="btn">عرض الكورس</button>
+      </div>
+
+      <div class="course-card">
+        <div class="course-icon">🎯</div>
+        <h3>تطوير المهارات</h3>
+        <p>
+          طور مهاراتك واكتسب خبرات جديدة
+          من خلال كورساتنا.
+        </p>
+        <button class="btn">عرض الكورس</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="about" id="about">
+
+    <h2 class="section-title">عن منصات الجو</h2>
+
+    <p>
+      منصات الجو هي منصة تعليمية عربية هدفها توفير
+      محتوى تعليمي مفيد وسهل الاستخدام للطلاب
+      والمتعلمين، مع إمكانية إضافة المزيد من
+      الكورسات والمميزات مستقبلاً.
+    </p>
+
+  </section>
+
+  <footer>
+    <p>© 2026 منصات الجو - جميع الحقوق محفوظة</p>
+  </footer>
+
+</body>
+  </html>
