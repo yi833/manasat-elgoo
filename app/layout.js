@@ -1,12 +1,17 @@
+import Navigation from "./components/Navigation";
+
 export const metadata = {
   title: "منصات الجو",
-  description: "منصة الجو - منصة كورسات تعليمية عربية",
+  description: "منصة منصات الجو التعليمية",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl">
-      <body>{children}</body>
+      <body style={{ margin: 0 }}>
+        <Navigation />
+        {children}
+      </body>
     </html>
   );
-    }
+}
